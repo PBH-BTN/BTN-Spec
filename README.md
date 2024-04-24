@@ -90,8 +90,8 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 }
 ```
 
-`interval`: 提交间隔
-`random_initial_delay`: 首次提交延迟随机偏移量。客户端首次提交应被计划在 `interval + random.nextLong(random_initial_delay)` 期间，以避免服务器出现请求处理尖峰，缓解服务器压力
+`interval`: 提交间隔（单位：毫秒）
+`random_initial_delay`: 首次提交延迟随机偏移（单位：毫秒）。客户端首次提交应被计划在 `interval + random.nextLong(random_initial_delay)` 期间，以避免服务器出现请求处理尖峰，缓解服务器压力
 `endpoint`: 指定此能力数据将被提交到哪个 API 端点。
 
 #### 请求
