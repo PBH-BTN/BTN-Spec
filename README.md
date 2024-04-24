@@ -42,7 +42,150 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 以下是一个示例响应：
 
 ```json
-
-
+{
+	"min_protocol_version": 3,
+	"max_protocol_version": 3,
+	"ability": {
+		"submit_peers": {
+			"interval": 900000,
+			"endpoint": "https://btn-dev-v2.ghostchu-services.top/ping/submitPeers",
+			"random_initial_delay": 5000
+		},
+		"submit_bans": {
+			"interval": 900000,
+			"endpoint": "https://btn-dev-v2.ghostchu-services.top/ping/submitBans",
+			"random_initial_delay": 5000
+		},
+		"rules": {
+			"interval": 900000,
+			"endpoint": "https://btn-dev-v2.ghostchu-services.top/ping/rules",
+			"random_initial_delay": 5000
+		},
+		"reconfigure": {
+			"interval": 900000,
+			"random_initial_delay": 5000,
+			"version": "3642e5eb-d435-4905-ad0e-e908470833c3"
+		}
+	}
+}
 ```
+
+在您的客户端实现收到此响应后，应首先检查自己的客户端是否满足 protocol_version 的需求，处于区间之内。如果不处于区间内，则应退出，并向用户报告错误。  
+`ability` 对象内是服务器支持的能力及其配置列表，其具体内容由各个能力模块定义。  
+
+## 能力
+
+服务器不必实现全部能力，同理客户端也是。但你总是应该尽最大可能实现本规范列出的所有能力，以提供最佳使用体验。  
+特别的，在配置提交数据类的能力时，应首先征求用户同意以确保用户知道自己的部分数据将被提交到服务器。在未取得用户同意的情况下，不得执行这些能力。
+
+### 提交 Peers 列表
+
+#### 配置
+
+```json
+{
+	"interval": 900000,
+	"endpoint": "https://btn-dev-v2.ghostchu-services.top/ping/submitPeers",
+	"random_initial_delay": 5000
+}
+```
+
+`interval`: 提交间隔
+`random_initial_delay`: 首次提交延迟随机偏移量。客户端首次提交应被计划在 `interval + random.nextLong(random_initial_delay)` 期间，以避免服务器出现请求处理尖峰，缓解服务器压力
+`endpoint`: 指定此能力数据将被提交到哪个 API 端点。
+
+#### 请求
+
+以下是请求示例：
+
+```json
+{
+	"populate_time": 1713971696000,
+	"peers": [{
+			"ip_address": "CE67:2B6F:646A:138B:9E4F:DD47:894E:608E",
+			"peer_port": 12345,
+			"peer_id": "-BC1234-",
+			"client_name": "BitComet 1.2.3.4",
+			"torrent_identifier": "<使用特定算法对 info_hash 进行加盐哈希>",
+			"torrent_size": 12346789765,
+			"downloaded": 3463465,
+			"rt_download_speed": 133525,
+			"uploaded": 2345754,
+			"rt_upload_speed": 234456465,
+			"peer_progress": 0.1245,
+			"downloader_progress": 1,
+			"peer_flag": "u I H X E P"
+		},
+		{
+			"ip_address": "198.148.143.87",
+			"peer_port": 23333,
+			"peer_id": "-qB2312-",
+			"client_name": "qBittorrent 2.3.1.2",
+			"torrent_identifier": "<使用特定算法对 info_hash 进行加盐哈希>",
+			"torrent_size": 12346789765,
+			"downloaded": 3463465,
+			"rt_download_speed": 133525,
+			"uploaded": 2345754,
+			"rt_upload_speed": 234456465,
+			"peer_progress": 0.1245,
+			"downloader_progress": 1,
+			"peer_flag": "u I H X E P"
+		}
+	]
+}
+```
+
+字段说明：
+* ip_address - Peer 的 IPV4/IPV6 地址
+* peer_port - Peer 连接的端口号
+* peer_id - Peer ID，直接提交原始内容，无需过滤不可打印字符，如果不支持或未获取到，请使用空字符串填充
+* client_ name - Peer ClientName，有时也被称为 User-Agent，如果不支持或未获取到，请使用空字符串填充
+* torrent_identifier - 种子唯一 ID，基于 info_hash 使用特定算法加盐哈希，以匿名化处理
+* torrent_size - 种子大小（单位：bytes）
+* downloaded - 用户下载器从此 Peer 获取的数据总量 （单位：bytes），如果不支持，请使用 -1 值填充
+* rt_download_speed - 用户下载器从此 Peer 获取数据的实时速度（单位：bytes），如果不支持，请使用 -1 值填充
+* uploaded - 用户下载器向此 Peer 提供的数据总量 （单位：bytes），如果不支持，请使用 -1 值填充
+* rt_upload_speed - 用户下载器向此 Peer 提供的数据的实时速度 （单位：bytes），如果不支持，请使用 -1 值填充
+* peer_progress - Peer 在当前 torrent 的下载进度（浮点型，0 = 0%，1 = 100%）
+* downloader_progress - 用户在当前 torrent 的下载进度（浮点型，0 = 0%，1 = 100%）
+* peer_flag - BT 客户端显示的 “标志”，直接获取并填写在这里即可，如果不支持或未获取到，请使用空字符串填充
+
+提交方式：  
+向此能力给定的 endpoint 发送 POST 请求。请求体必须且只能使用 GZIP 压缩，不支持未压缩的传输。  
+附加请求头：
+  * Content-Encoding: gzip
+
+#### 响应
+
+期望响应：  
+* 200 - 服务器成功处理此请求
+
+错误、重定向响应：  
+请参见：通用响应处理
+
+### 通用响应处理
+
+BTN 实现客户端应该合理的处理服务器的响应。对于重定向响应（301/302），则自动跟随。
+
+对于错误响应，服务器应该按照 [HTTP 响应状态码规范](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status) 返回合理的响应码；客户端则仅需要在收到这些状态码后，将状态码和响应体告知用户（如：在控制台打印），然后进行错误处理即可。
+
+### Torrent Identifier 算法
+
+为了匿名用户下载内容（我们不关心你在下载什么，也不想承担存储它带来的隐私风险！），**所有 BTN 实现客户端必须严格执行此算法，匿名处理用户的种子信息**。
+
+以下是 Java 实现的代码（使用 Google Guava 库）：
+
+```java
+    /**
+     * 获取种子不可逆匿名识别符
+     *
+     * @return 不可逆匿名识别符
+     */
+    public String getHashedIdentifier() {
+        String salt = Hashing.crc32().hashString(torrentInfoHash, StandardCharsets.UTF_8).toString(); // 使用 crc32 计算 info_hash 的哈希作为盐
+        return Hashing.sha256().hashString(torrentInfoHash + salt, StandardCharsets.UTF_8).toString(); // 在 info_hash 的明文后面追加盐后，计算 SHA256 的哈希值，结果应转全小写
+    }
+```
+
+
 
