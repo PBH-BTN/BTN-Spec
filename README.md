@@ -136,6 +136,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 ```
 
 字段说明：
+* populate_time - 数据打包时间
 * ip_address - Peer 的 IPV4/IPV6 地址
 * peer_port - Peer 连接的端口号
 * peer_id - Peer ID，直接提交原始内容，无需过滤不可打印字符，如果不支持或未获取到，请使用空字符串填充
@@ -162,6 +163,76 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 
 错误、重定向响应：  
 请参见：通用响应处理
+
+### 提交封禁列表
+
+#### 配置
+
+```json
+{
+	"interval": 900000,
+	"endpoint": "https://btn-dev-v2.ghostchu-services.top/ping/submitBans",
+	"random_initial_delay": 5000
+}
+```
+
+`interval`: 提交间隔（单位：毫秒）
+`random_initial_delay`: 首次提交延迟随机偏移（单位：毫秒）。客户端首次提交应被计划在 `interval + random.nextLong(random_initial_delay)` 期间，以避免服务器出现请求处理尖峰，缓解服务器压力
+`endpoint`: 指定此能力数据将被提交到哪个 API 端点。
+
+#### 请求
+
+以下是请求示例：
+
+```json
+{
+	"populate_time": 1714280802047,
+	"bans": [{
+		"btn_ban": false,
+		"module": "com.ghostchu.peerbanhelper.module.impl.rule.PeerIdBlacklist",
+		"rule": "匹配 PeerId 规则: StringStartsWithMatcher{rule='-hp', hit=TRUE, miss=DEFAULT}",
+		"peer": {
+			"ip_address": "123.187.29.6",
+			"peer_port": 60874,
+			"peer_id": "-HP0001-",
+			"client_name": "HP 0.0.0.1",
+			"torrent_identifier": "3aa35361a3c0a02c304f4d7af9770a73feea699a7f13bc4ebe07388fec321352",
+			"torrent_size": 5044211712,
+			"downloaded": 0,
+			"rt_download_speed": 0,
+			"uploaded": 0,
+			"rt_upload_speed": 0,
+			"peer_progress": 0.0,
+			"downloader_progress": 0.3929437099724969,
+			"peer_flag": "I E"
+		}
+	}]
+}
+```
+
+字段说明：
+* populate_time - 数据打包时间
+* bans - 封禁列表
+* btn_ban - 是否是被 BTN 的规则封禁的 Peer
+* module - 执行封禁规则模块名称
+* ip_address - Peer 的 IPV4/IPV6 地址
+* peer_port - Peer 连接的端口号
+* peer_id - Peer ID，直接提交原始内容，无需过滤不可打印字符，如果不支持或未获取到，请使用空字符串填充
+* client_ name - Peer ClientName，有时也被称为 User-Agent，如果不支持或未获取到，请使用空字符串填充
+* torrent_identifier - 种子唯一 ID，基于 info_hash 使用特定算法加盐哈希，以匿名化处理
+* torrent_size - 种子大小（单位：bytes）
+* downloaded - 用户下载器从此 Peer 获取的数据总量 （单位：bytes），如果不支持，请使用 -1 值填充
+* rt_download_speed - 用户下载器从此 Peer 获取数据的实时速度（单位：bytes），如果不支持，请使用 -1 值填充
+* uploaded - 用户下载器向此 Peer 提供的数据总量 （单位：bytes），如果不支持，请使用 -1 值填充
+* rt_upload_speed - 用户下载器向此 Peer 提供的数据的实时速度 （单位：bytes），如果不支持，请使用 -1 值填充
+* peer_progress - Peer 在当前 torrent 的下载进度（浮点型，0 = 0%，1 = 100%）
+* downloader_progress - 用户在当前 torrent 的下载进度（浮点型，0 = 0%，1 = 100%）
+* peer_flag - BT 客户端显示的 “标志”，直接获取并填写在这里即可，如果不支持或未获取到，请使用空字符串填充
+
+提交方式：  
+向此能力给定的 endpoint 发送 POST 请求。请求体必须且只能使用 GZIP 压缩，不支持未压缩的传输。  
+附加请求头：
+  * Content-Encoding: gzip
 
 ### 通用响应处理
 
