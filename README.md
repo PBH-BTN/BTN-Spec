@@ -196,7 +196,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 			"peer_port": 60874,
 			"peer_id": "-HP0001-",
 			"client_name": "HP 0.0.0.1",
-			"torrent_identifier": "3aa35361a3c0a02c304f4d7af9770a73feea699a7f13bc4ebe07388fec321352",
+			"torrent_identifier": "<使用特定算法对 info_hash 进行加盐哈希>",
 			"torrent_size": 5044211712,
 			"downloaded": 0,
 			"rt_download_speed": 0,
