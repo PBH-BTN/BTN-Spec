@@ -323,6 +323,13 @@ BTN 实现客户端应该合理的处理服务器的响应。对于重定向响�
 ```
 
 
+## License
+
+BTN-Spec 的文档和示例代码在 CC-0 (Public Domain) 协议下授权：
+
+[![CC-0](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/cc-zero.png)](https://creativecommons.org/publicdomain/zero/1.0/)
+
+
 ## 目前接入 BTN 协议的客户端列表
 
 * [PeerBanHelper](https://github.com/PBH-BTN/PeerBanHelper) （最新版支持：0.0.0-dev）
