@@ -143,7 +143,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 * peer_port - Peer 连接的端口号
 * peer_id - Peer ID，直接提交原始内容，无需过滤不可打印字符，如果不支持或未获取到，请使用空字符串填充
 * client_ name - Peer ClientName，有时也被称为 User-Agent，如果不支持或未获取到，请使用空字符串填充
-* torrent_identifier - 种子唯一 ID，基于 info_hash 使用特定算法加盐哈希，以匿名化处理
+* torrent_identifier - 种子唯一 ID，基于 info_hash 使用[特定算法](https://github.com/PBH-BTN/BTN-Spec/blob/main/README.md#torrent-identifier-%E7%AE%97%E6%B3%95)加盐哈希，以匿名化处理
 * torrent_size - 种子大小（单位：bytes）
 * downloaded - 用户下载器从此 Peer 获取的数据总量 （单位：bytes），如果不支持，请使用 -1 值填充
 * rt_download_speed - 用户下载器从此 Peer 获取数据的实时速度（单位：bytes），如果不支持，请使用 -1 值填充
@@ -223,7 +223,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 * peer_port - Peer 连接的端口号
 * peer_id - Peer ID，直接提交原始内容，无需过滤不可打印字符，如果不支持或未获取到，请使用空字符串填充
 * client_ name - Peer ClientName，有时也被称为 User-Agent，如果不支持或未获取到，请使用空字符串填充
-* torrent_identifier - 种子唯一 ID，基于 info_hash 使用特定算法加盐哈希，以匿名化处理
+* torrent_identifier - 种子唯一 ID，基于 info_hash 使用[特定算法](https://github.com/PBH-BTN/BTN-Spec/blob/main/README.md#torrent-identifier-%E7%AE%97%E6%B3%95)加盐哈希，以匿名化处理
 * torrent_size - 种子大小（单位：bytes）
 * downloaded - 用户下载器从此 Peer 获取的数据总量 （单位：bytes），如果不支持，请使用 -1 值填充
 * rt_download_speed - 用户下载器从此 Peer 获取数据的实时速度（单位：bytes），如果不支持，请使用 -1 值填充
