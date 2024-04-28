@@ -2,6 +2,10 @@
 
 BitTorrent Threat Network 标准规范。通过实现此规范，能够让让您的客户端接入任何其它符合此规范的 BTN 实例。
 
+> [!TIP]
+> 当前规范版本号：0.0.0-dev （草案、非稳定版本）  
+> 在实现非稳定版本 BTN-Spec 时，建议与 BTN 规范制定者联系。
+
 
 ## 登录鉴权
 
@@ -319,4 +323,6 @@ BTN 实现客户端应该合理的处理服务器的响应。对于重定向响�
 ```
 
 
+## 目前接入 BTN 协议的客户端列表
 
+* [PeerBanHelper](https://github.com/PBH-BTN/PeerBanHelper) （最新版支持：0.0.0-dev）
