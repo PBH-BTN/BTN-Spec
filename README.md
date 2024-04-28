@@ -164,7 +164,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 * 200 - 服务器成功处理此请求
 
 错误、重定向响应：  
-请参见：通用响应处理
+请参见：[通用响应处理](https://github.com/PBH-BTN/BTN-Spec/blob/main/README.md#%E9%80%9A%E7%94%A8%E5%93%8D%E5%BA%94%E5%A4%84%E7%90%86)
 
 ### 提交封禁列表
 
@@ -244,7 +244,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 * 200 - 服务器成功处理此请求
 
 错误、重定向响应：  
-请参见：通用响应处理
+请参见：[通用响应处理](https://github.com/PBH-BTN/BTN-Spec/blob/main/README.md#%E9%80%9A%E7%94%A8%E5%93%8D%E5%BA%94%E5%A4%84%E7%90%86)
 
 ### 允许重新配置
 
@@ -270,7 +270,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 * 200 - 服务器成功处理此请求
 
 错误、重定向响应：  
-请参见：通用响应处理
+请参见：[通用响应处理](https://github.com/PBH-BTN/BTN-Spec/blob/main/README.md#%E9%80%9A%E7%94%A8%E5%93%8D%E5%BA%94%E5%A4%84%E7%90%86)
 
 #### 请求
 
@@ -292,7 +292,7 @@ TODO: 等待施工！
 * 200 - 服务器成功处理此请求
 
 错误、重定向响应：  
-请参见：通用响应处理
+请参见：[通用响应处理](https://github.com/PBH-BTN/BTN-Spec/blob/main/README.md#%E9%80%9A%E7%94%A8%E5%93%8D%E5%BA%94%E5%A4%84%E7%90%86)
 
 ## 通用响应处理
 
