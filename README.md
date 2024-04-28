@@ -238,6 +238,14 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 附加请求头：
   * Content-Encoding: gzip
 
+#### 响应
+
+期望响应：  
+* 200 - 服务器成功处理此请求
+
+错误、重定向响应：  
+请参见：通用响应处理
+
 ### 允许重新配置
 
 此能力允许 BTN 兼容客户端检测 BTN 实例上的配置更改，并在需要时重新配置 BTN 兼容客户端。
@@ -256,6 +264,13 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 `random_initial_delay`: 首次提交延迟随机偏移（单位：毫秒）。客户端首次提交应被计划在 `interval + random.nextLong(random_initial_delay)` 期间，以避免服务器出现请求处理尖峰，缓解服务器压力
 `version`: 指定当前配置版本号，当两次检查版本号不一致时，将会触发重新配置
 
+#### 响应
+
+期望响应：  
+* 200 - 服务器成功处理此请求
+
+错误、重定向响应：  
+请参见：通用响应处理
 
 #### 请求
 
@@ -271,11 +286,19 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 
 TODO: 等待施工！
 
+#### 响应
+
+期望响应：  
+* 200 - 服务器成功处理此请求
+
+错误、重定向响应：  
+请参见：通用响应处理
+
 ## 通用响应处理
 
 BTN 实现客户端应该合理的处理服务器的响应。对于重定向响应（301/302），则自动跟随。
 
-对于错误响应，服务器应该按照 [HTTP 响应状态码规范](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status) 返回合理的响应码；客户端则仅需要在收到这些状态码后，将状态码和响应体告知用户（如：在控制台打印），然后进行错误处理即可。
+对于错误响应，服务器应该按照 [HTTP 响应状态码规范](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status) 返回合理的响应码；客户端则仅需要在收到这些状态码后，将状态码和响应体告知用户（如：在控制台打印），然后进行错误处理即可。  
 
 ## Torrent Identifier 算法
 
