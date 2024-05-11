@@ -82,7 +82,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 服务器不必实现全部能力，同理客户端也是。但你总是应该尽最大可能实现本规范列出的所有能力，以提供最佳使用体验。  
 特别的，在配置提交数据类的能力时，应首先征求用户同意以确保用户知道自己的部分数据将被提交到服务器。在未取得用户同意的情况下，不得执行这些能力。
 
-### 提交 Peers 列表
+### 提交 Peers 列表 `submit_peers`
 
 此能力允许 BTN 兼容客户端向 BTN 实例提交目前连接到下载器的 Peers 列表。
 
@@ -170,7 +170,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 错误、重定向响应：  
 请参见：[通用响应处理](https://github.com/PBH-BTN/BTN-Spec/blob/main/README.md#%E9%80%9A%E7%94%A8%E5%93%8D%E5%BA%94%E5%A4%84%E7%90%86)
 
-### 提交封禁列表
+### 提交封禁列表 `submit_bans`
 
 此能力允许 BTN 兼容客户端向 BTN 实例提交当前活跃的封禁列表。
 
@@ -250,7 +250,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 错误、重定向响应：  
 请参见：[通用响应处理](https://github.com/PBH-BTN/BTN-Spec/blob/main/README.md#%E9%80%9A%E7%94%A8%E5%93%8D%E5%BA%94%E5%A4%84%E7%90%86)
 
-### 允许重新配置
+### 允许重新配置 `reconfigure`
 
 此能力允许 BTN 兼容客户端检测 BTN 实例上的配置更改，并在需要时重新配置 BTN 兼容客户端。
 
