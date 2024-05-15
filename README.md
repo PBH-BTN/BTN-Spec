@@ -212,7 +212,8 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 			"rt_upload_speed": 0,
 			"peer_progress": 0.0,
 			"downloader_progress": 0.3929437099724969,
-			"peer_flag": "I E"
+			"peer_flag": "I E",
+                        "ban_unique_id": "123456789"
 		}
 	}]
 }
@@ -236,6 +237,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 * peer_progress - Peer 在当前 torrent 的下载进度（浮点型，0 = 0%，1 = 100%）
 * downloader_progress - 用户在当前 torrent 的下载进度（浮点型，0 = 0%，1 = 100%）
 * peer_flag - BT 客户端显示的 “标志”，直接获取并填写在这里即可，如果不支持或未获取到，请使用空字符串填充
+* ban_unique_id - 唯一封禁ID，在解封之前此值应保持不变
 
 提交方式：  
 向此能力给定的 endpoint 发送 POST 请求。请求体必须且只能使用 GZIP 压缩，不支持未压缩的传输。  
