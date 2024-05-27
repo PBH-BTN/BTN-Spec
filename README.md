@@ -13,28 +13,27 @@ BitTorrent Threat Network 标准规范。通过实现此规范，能够让让您
 
 BTN 使用 AppID + AppSecret 的组合来鉴权，以下是需要携带的 HTTP 请求头：
 
-必须支持：
+客户端、服务端必须支持：
+
+```
+Authentication: Bearer <AppID>@<AppSecret>
+```
+
+客户端必须支持、服务端可选支持：
 
 ```
 X-BTN-AppID: <AppID>
 X-BTN-AppSecret: <AppSecret>
 ```
 
-必须支持：
-
-```
-Authentication: Bearer <AppID>@<AppSecret>
-```
-
-向前兼容性：
+客户端不支持、服务端可选支持：
 
 ```
 BTN-AppID: <AppID>
 BTN-AppSecret: <AppSecret>
 ```
 
-我们规范推荐您支持第一和第二种，但由于仍有旧版本 PBH 运行，因此推荐您也支持第三种。  
-三种有任意一种鉴权成功，则视为鉴权通过。  
+规范推荐您支持第一和第二种，但由于仍有旧版本 PBH 运行，因此推荐您也支持第三种。  
 
 
 ## 表明您的客户端实现
