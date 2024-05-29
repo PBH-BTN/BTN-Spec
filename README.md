@@ -337,8 +337,9 @@ BTN 实现客户端应该合理的处理服务器的响应。对于重定向响�
      * @return 不可逆匿名识别符
      */
     public String getHashedIdentifier(String torrentInfoHash) {
-        String salt = Hashing.crc32().hashString(torrentInfoHash, StandardCharsets.UTF_8).toString(); // 使用 crc32 计算 info_hash 的哈希作为盐
-        return Hashing.sha256().hashString(torrentInfoHash + salt, StandardCharsets.UTF_8).toString(); // 在 info_hash 的明文后面追加盐后，计算 SHA256 的哈希值，结果应转全小写
+        String torrentInfoHandled = torrentInfoHash.toLowerCase(Locale.ROOT); // 转小写处理
+        String salt = Hashing.crc32().hashString(torrentInfoHandled, StandardCharsets.UTF_8).toString(); // 使用 crc32 计算 info_hash 的哈希作为盐
+        return Hashing.sha256().hashString(torrentInfoHandled + salt, StandardCharsets.UTF_8).toString(); // 在 info_hash 的明文后面追加盐后，计算 SHA256 的哈希值，结果应转全小写
     }
 ```
 
