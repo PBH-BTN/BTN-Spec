@@ -34,7 +34,7 @@ BTN 使用 AppID + AppSecret 的组合来鉴权，以下是需要携带的 HTTP 
 客户端、服务端必须支持：
 
 ```
-Authentication: Bearer <AppID>@<AppSecret>
+Authorization: Bearer <AppID>@<AppSecret>
 ```
 
 客户端必须支持、服务端可选支持：
