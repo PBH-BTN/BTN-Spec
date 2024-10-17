@@ -233,7 +233,6 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 	"populate_time": 1713971696000,
 	"peers": [{
 			"ip_address": "CE67:2B6F:646A:138B:9E4F:DD47:894E:608E",
-			"peer_port": 12345,
 			"peer_id": "-BC1234-",
 			"client_name": "BitComet 1.2.3.4",
 			"torrent_identifier": "<使用特定算法对 info_hash 进行加盐哈希>",
@@ -242,8 +241,8 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 			"downloaded_offset": 133525,
 			"uploaded": 2345754,
 			"uploaded_offset": 234456465,
-			"first_time_seen": timestamp,
-			"last_time_seen": timestamp,
+			"first_time_seen": 1234567890,
+			"last_time_seen": 1234567890,
 			"peer_flag": "u I H X E P"
 		}
 	]
