@@ -3,7 +3,7 @@
 BitTorrent Threat Network 标准规范。通过实现此规范，能够让让您的客户端接入任何其它符合此规范的 BTN 实例。
 
 > [!TIP]
-> 当前规范版本号：0.0.1 （草案、非稳定版本）  
+> 当前规范版本号：0.0.2 （草案、非稳定版本）  
 > 在实现非稳定版本 BTN-Spec 时，建议与 BTN 规范制定者联系。
 
 ## 设计理念
@@ -128,6 +128,94 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 {
 	"interval": 900000,
 	"endpoint": "https://btn-dev-v2.ghostchu-services.top/ping/submitPeers",
+	"random_initial_delay": 5000
+}
+```
+
+`interval`: 提交间隔（单位：毫秒）
+`random_initial_delay`: 首次提交延迟随机偏移（单位：毫秒）。客户端首次提交应被计划在 `interval + random.nextLong(random_initial_delay)` 期间，以避免服务器出现请求处理尖峰，缓解服务器压力
+`endpoint`: 指定此能力数据将被提交到哪个 API 端点。
+
+#### 请求
+
+以下是请求示例：
+
+```json
+{
+	"populate_time": 1713971696000,
+	"peers": [{
+			"ip_address": "CE67:2B6F:646A:138B:9E4F:DD47:894E:608E",
+			"peer_port": 12345,
+			"peer_id": "-BC1234-",
+			"client_name": "BitComet 1.2.3.4",
+			"torrent_identifier": "<使用特定算法对 info_hash 进行加盐哈希>",
+			"torrent_size": 12346789765,
+			"downloaded": 3463465,
+			"rt_download_speed": 133525,
+			"uploaded": 2345754,
+			"rt_upload_speed": 234456465,
+			"peer_progress": 0.1245,
+			"downloader_progress": 1,
+			"peer_flag": "u I H X E P"
+		},
+		{
+			"ip_address": "198.148.143.87",
+			"peer_port": 23333,
+			"peer_id": "-qB2312-",
+			"client_name": "qBittorrent 2.3.1.2",
+			"torrent_identifier": "<使用特定算法对 info_hash 进行加盐哈希>",
+			"torrent_size": 12346789765,
+			"downloaded": 3463465,
+			"rt_download_speed": 133525,
+			"uploaded": 2345754,
+			"rt_upload_speed": 234456465,
+			"peer_progress": 0.1245,
+			"downloader_progress": 1,
+			"peer_flag": "u I H X E P"
+		}
+	]
+}
+```
+
+字段说明：
+* populate_time - 数据打包时间
+* ip_address - Peer 的 IPV4/IPV6 地址
+* peer_port - Peer 连接的端口号
+* peer_id - Peer ID，直接提交原始内容，无需过滤不可打印字符，如果不支持或未获取到，请使用空字符串填充
+* client_ name - Peer ClientName，有时也被称为 User-Agent，如果不支持或未获取到，请使用空字符串填充
+* torrent_identifier - 种子唯一 ID，基于 info_hash 使用[特定算法](https://github.com/PBH-BTN/BTN-Spec/blob/main/README.md#torrent-identifier-%E7%AE%97%E6%B3%95)加盐哈希，以匿名化处理
+* torrent_size - 种子大小（单位：bytes）
+* downloaded - 用户下载器从此 Peer 获取的数据总量 （单位：bytes），如果不支持，请使用 -1 值填充
+* rt_download_speed - 用户下载器从此 Peer 获取数据的实时速度（单位：bytes），如果不支持，请使用 -1 值填充
+* uploaded - 用户下载器向此 Peer 提供的数据总量 （单位：bytes），如果不支持，请使用 -1 值填充
+* rt_upload_speed - 用户下载器向此 Peer 提供的数据的实时速度 （单位：bytes），如果不支持，请使用 -1 值填充
+* peer_progress - Peer 在当前 torrent 的下载进度（浮点型，0 = 0%，1 = 100%）
+* downloader_progress - 用户在当前 torrent 的下载进度（浮点型，0 = 0%，1 = 100%）
+* peer_flag - BT 客户端显示的 “标志”，直接获取并填写在这里即可，如果不支持或未获取到，请使用空字符串填充
+
+提交方式：  
+向此能力给定的 endpoint 发送 POST 请求。请求体必须且只能使用 GZIP 压缩，不支持未压缩的传输。  
+附加请求头：
+  * Content-Encoding: gzip
+
+#### 响应
+
+期望响应：  
+* 200 - 服务器成功处理此请求
+
+错误、重定向响应：  
+请参见：[通用响应处理](https://github.com/PBH-BTN/BTN-Spec/blob/main/README.md#%E9%80%9A%E7%94%A8%E5%93%8D%E5%BA%94%E5%A4%84%E7%90%86)
+
+### 提交 Peers 累积数据列表 `submit_histories`
+
+此能力允许 BTN 兼容客户端向 BTN 实例提交自上次提交以来，累积的 Peers 数据更新项。
+
+#### 配置
+
+```json
+{
+	"interval": 900000,
+	"endpoint": "https://btn-dev-v2.ghostchu-services.top/ping/submitHistories",
 	"random_initial_delay": 5000
 }
 ```
