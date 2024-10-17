@@ -239,26 +239,11 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 			"torrent_identifier": "<使用特定算法对 info_hash 进行加盐哈希>",
 			"torrent_size": 12346789765,
 			"downloaded": 3463465,
-			"rt_download_speed": 133525,
+			"downloaded_offset": 133525,
 			"uploaded": 2345754,
-			"rt_upload_speed": 234456465,
-			"peer_progress": 0.1245,
-			"downloader_progress": 1,
-			"peer_flag": "u I H X E P"
-		},
-		{
-			"ip_address": "198.148.143.87",
-			"peer_port": 23333,
-			"peer_id": "-qB2312-",
-			"client_name": "qBittorrent 2.3.1.2",
-			"torrent_identifier": "<使用特定算法对 info_hash 进行加盐哈希>",
-			"torrent_size": 12346789765,
-			"downloaded": 3463465,
-			"rt_download_speed": 133525,
-			"uploaded": 2345754,
-			"rt_upload_speed": 234456465,
-			"peer_progress": 0.1245,
-			"downloader_progress": 1,
+			"uploaded_offset": 234456465,
+			"first_time_seen": timestamp,
+			"last_time_seen": timestamp,
 			"peer_flag": "u I H X E P"
 		}
 	]
@@ -273,12 +258,12 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 * client_ name - Peer ClientName，有时也被称为 User-Agent，如果不支持或未获取到，请使用空字符串填充
 * torrent_identifier - 种子唯一 ID，基于 info_hash 使用[特定算法](https://github.com/PBH-BTN/BTN-Spec/blob/main/README.md#torrent-identifier-%E7%AE%97%E6%B3%95)加盐哈希，以匿名化处理
 * torrent_size - 种子大小（单位：bytes）
-* downloaded - 用户下载器从此 Peer 获取的数据总量 （单位：bytes），如果不支持，请使用 -1 值填充
-* rt_download_speed - 用户下载器从此 Peer 获取数据的实时速度（单位：bytes），如果不支持，请使用 -1 值填充
-* uploaded - 用户下载器向此 Peer 提供的数据总量 （单位：bytes），如果不支持，请使用 -1 值填充
-* rt_upload_speed - 用户下载器向此 Peer 提供的数据的实时速度 （单位：bytes），如果不支持，请使用 -1 值填充
-* peer_progress - Peer 在当前 torrent 的下载进度（浮点型，0 = 0%，1 = 100%）
-* downloader_progress - 用户在当前 torrent 的下载进度（浮点型，0 = 0%，1 = 100%）
+* downloaded - 用户下载器从此 Peer 获取的数据总量 （单位：bytes），此值不应因下载器数据变化而重置，如果不支持，请使用 -1 值填充
+* downloaded_offset - 下载器提供的已下载数据，如果不支持，请使用 -1 值填充
+* uploaded - 用户下载器向此 Peer 提供的数据总量 （单位：bytes），此值不应因下载器数据变化而重置，如果不支持，请使用 -1 值填充
+* uploaded_offset - 下载器提供的已上传数据，如果不支持，请使用 -1 值填充
+* first_time_seen - 会话开始时间
+* last_time_seen - 会话结束时间
 * peer_flag - BT 客户端显示的 “标志”，直接获取并填写在这里即可，如果不支持或未获取到，请使用空字符串填充
 
 提交方式：  
