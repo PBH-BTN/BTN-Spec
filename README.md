@@ -3,7 +3,7 @@
 BitTorrent Threat Network 标准规范。通过实现此规范，能够让让您的客户端接入任何其它符合此规范的 BTN 实例。
 
 > [!TIP]
-> 当前规范版本号：0.0.2 （草案、非稳定版本）  ，内部版本 `8`  
+> 当前规范版本号：0.0.2 （草案、非稳定版本）  ，内部版本 `9`  
 > 在实现非稳定版本 BTN-Spec 时，建议与 BTN 规范制定者联系。
 
 ## 设计理念
@@ -150,6 +150,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 			"client_name": "BitComet 1.2.3.4",
 			"torrent_identifier": "<使用特定算法对 info_hash 进行加盐哈希>",
 			"torrent_size": 12346789765,
+			"torrent_is_private": false,
 			"downloaded": 3463465,
 			"rt_download_speed": 133525,
 			"uploaded": 2345754,
@@ -165,6 +166,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 			"client_name": "qBittorrent 2.3.1.2",
 			"torrent_identifier": "<使用特定算法对 info_hash 进行加盐哈希>",
 			"torrent_size": 12346789765,
+			"torrent_is_private": false,
 			"downloaded": 3463465,
 			"rt_download_speed": 133525,
 			"uploaded": 2345754,
@@ -192,6 +194,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 * peer_progress - Peer 在当前 torrent 的下载进度（浮点型，0 = 0%，1 = 100%）
 * downloader_progress - 用户在当前 torrent 的下载进度（浮点型，0 = 0%，1 = 100%）
 * peer_flag - BT 客户端显示的 “标志”，直接获取并填写在这里即可，如果不支持或未获取到，请使用空字符串填充
+* torrent_is_private - 是否为私有种子
 
 提交方式：  
 向此能力给定的 endpoint 发送 POST 请求。请求体必须且只能使用 GZIP 压缩，不支持未压缩的传输。  
@@ -237,6 +240,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 			"client_name": "BitComet 1.2.3.4",
 			"torrent_identifier": "<使用特定算法对 info_hash 进行加盐哈希>",
 			"torrent_size": 12346789765,
+			"torrent_is_private": false,
 			"downloaded": 3463465,
 			"downloaded_offset": 133525,
 			"uploaded": 2345754,
@@ -264,6 +268,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 * first_time_seen - 会话开始时间
 * last_time_seen - 会话结束时间
 * peer_flag - BT 客户端显示的 “标志”，直接获取并填写在这里即可，如果不支持或未获取到，请使用空字符串填充
+* torrent_is_private - 是否为私有种子
 
 提交方式：  
 向此能力给定的 endpoint 发送 POST 请求。请求体必须且只能使用 GZIP 压缩，不支持未压缩的传输。  
@@ -314,6 +319,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 			"client_name": "HP 0.0.0.1",
 			"torrent_identifier": "<使用特定算法对 info_hash 进行加盐哈希>",
 			"torrent_size": 5044211712,
+			"torrent_is_private": false,
 			"downloaded": 0,
 			"rt_download_speed": 0,
 			"uploaded": 0,
@@ -346,6 +352,7 @@ Java/17.0.1 PeerBanHelper/v3.2.0-dev BTN-Protocol/0.0.0-dev
 * downloader_progress - 用户在当前 torrent 的下载进度（浮点型，0 = 0%，1 = 100%）
 * peer_flag - BT 客户端显示的 “标志”，直接获取并填写在这里即可，如果不支持或未获取到，请使用空字符串填充
 * ban_unique_id - 唯一封禁ID，在解封之前此值应保持不变
+* torrent_is_private - 是否为私有种子
 
 提交方式：  
 向此能力给定的 endpoint 发送 POST 请求。请求体必须且只能使用 GZIP 压缩，不支持未压缩的传输。  
