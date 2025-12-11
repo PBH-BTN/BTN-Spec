@@ -1,3 +1,5 @@
+此文档已过期。详细实现请参见：https://github.com/PBH-BTN/Sparkle3 源代码。
+
 # BTN-Spec
 
 BitTorrent Threat Network 标准规范。通过实现此规范，能够让让您的客户端接入任何其它符合此规范的 BTN 实例。
